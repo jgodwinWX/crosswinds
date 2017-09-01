@@ -33,6 +33,13 @@ airports = np.array(df['Airport'])
 rownum = np.where(airports==airport)[0][0]
 runways = np.array(df.iloc[rownum,1:])
 
+# get airport latitude/longitude
+df2 = pandas.read_csv('airports/airportlatlons.csv')
+latitude = float(df2[df2['ICAO'].str.contains(airport)]['Latitude'])
+longitude = float(df2[df2['ICAO'].str.contains(airport)]['Longitude'])
+
+# get magnetic declination
+
 # determine runway directions
 rnwy = np.zeros(len(runways))
 for i in range(len(runways)):
