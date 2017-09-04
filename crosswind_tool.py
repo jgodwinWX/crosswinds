@@ -28,19 +28,20 @@ windspd = float(raw_input("Wind speed: "))
 airport = raw_input("Airport (ICAO code): ")
 
 # import runway information
-df = pandas.read_csv('airports/airports.csv')
-airports = np.array(df['Airport'])
-rownum = np.where(airports==airport)[0][0]
-runways = np.array(df.iloc[rownum,1:])
+df = pandas.read_csv('airports/runways.csv')    # import the CSV as a dataframe
+df_airport = df[df['ID']==airport]              # reduce the dataframe to the relevant airport
+
+# get runway names
+runways = []
+for i,j in zip(df_airport['LowerID'],df_airport['UpperID']):
+    if len(i) == 1:
+        i = "0" + i
+    runways.append(i + "/" + j)
 
 # determine runway directions
 rnwy = np.zeros(len(runways))
 for i in range(len(runways)):
-    if type(runways[i]) is float:
-        continue
-    else:
-        rnwy[i] = float(runways[i][0:2]) * 10.0
-rnwy = filter(lambda x: x != 0.0, rnwy)
+    rnwy[i] = float(runways[i][0:2]) * 10.0
 
 # compute crosswind component on each runway and print the output
 print "Airport: %s" % airport
