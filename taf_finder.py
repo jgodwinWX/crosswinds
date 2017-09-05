@@ -25,9 +25,7 @@ windspd = numpy.zeros(len(groups))      # wind speed (knots)
 windgst = numpy.zeros(len(groups))      # wind gusts (knots)
 
 # get the valid time, wind speed, wind direction, and wind gusts for each group
-i = 0
-for group in groups:
+for i,group in enumerate(groups):
     winddir[i] = group['wind']['direction']
     windspd[i] = group['wind']['speed']
     windgst[i] = group['wind']['gust']
-    i += 1
